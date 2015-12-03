@@ -1,0 +1,69 @@
+package com.sample
+ 
+import java.util.List;
+import drools.DataTest;
+
+global String[] names;
+global java.util.HashMap  results
+global java.util.List  resultList
+ 
+rule "listTest1 contains"
+    when
+        m : DataTest( list contains "a" )
+    then
+        System.out.println("---listTest1 contains:"+ m.getList() );
+        results.put("processKey","ok");
+        resultList.add("hello word!");
+end
+
+rule "listTest2 contains"
+    when
+        m : DataTest( list contains "b" )
+    then
+        System.out.println("---listTest2 contains:"+ m );
+end
+
+rule "listTest3 not contains"
+    when
+        m : DataTest( list not contains "c" )
+    then
+        System.out.println("---listTest3 not contains:"+ m );
+end
+
+rule "listTest4 memberOf"
+    when
+        m : DataTest( name memberOf names )
+    then
+        System.out.println("---listTest4 memberOf:"+ m.getName() );
+end
+
+rule "listTest5 not memberOf"
+    when
+    	//$orderList : String[]();//有问题
+		//$m : DataTest(name not memberOf $orderList);
+		eval( true )
+    then
+        //System.out.println("---listTest5 not memberOf:"+ $m.getName() );
+end
+
+rule "mapTest1 contains"
+    when
+        m : DataTest( map contains "a" )
+    then
+        System.out.println("---map1 contains:"+ m.getMap() );
+end
+
+rule "mapTest2 not contains"
+    when
+        m : DataTest( map not contains "b" )
+    then
+        System.out.println("---map2 not contains:"+ m );
+end
+
+rule "stringTest"
+    when
+        $m : DataTest( name == "person" )
+    then
+        System.out.println("---string:"+ $m.getName() );
+end
+

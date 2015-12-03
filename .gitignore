@@ -1,0 +1,6 @@
+/WebContent/WEB-INF/
+/.settings
+.classpath
+.project
+*.class
+
