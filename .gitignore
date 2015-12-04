@@ -1,5 +1,7 @@
 /WebContent/WEB-INF/
 /.settings
+/logs
+/target
 .classpath
 .project
 *.class
