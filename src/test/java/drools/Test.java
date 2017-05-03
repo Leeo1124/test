@@ -37,16 +37,43 @@ import com.leeo.drools.DroolsUtil;
  * 内部执行了insert()方法、fireAllRules()方法和dispose()方法。
  */
 public class Test {
-    public static void main(String[] args) {
-        callRules();
-    }
     
-    public static void callRules(){
-        KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
+    private static final KnowledgeBuilder kbuilder;
+    
+    static {//方案一：只加载一次（缺点不能实时生效）(5.3.0.Final有问题 5.6.0.Final无问题)
+        kbuilder = KnowledgeBuilderFactory
                 .newKnowledgeBuilder();
             kbuilder.add(
                 ResourceFactory.newClassPathResource("rules/test.drl", Test.class),
                 ResourceType.DRL);
+    }
+    
+    public static void main(String[] args) {
+//        //方案一：synchronized同步，否则多线程调用编译规则文件时会报错(5.3.0.Final有问题 5.6.0.Final无问题)
+//        for(int i=0;i<10;i++){
+//            Thread thread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    callRules2();
+////                    callRules();
+//                }
+//            });
+//            thread.start();
+//        }
+        
+//        callRules();
+        
+//        callRules();
+        
+        callMapRules();
+    }
+    
+    public static void callRules(){
+//        KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
+//                .newKnowledgeBuilder();
+//            kbuilder.add(
+//                ResourceFactory.newClassPathResource("rules/test.drl", Test.class),
+//                ResourceType.DRL);
             if (kbuilder.hasErrors()) {
                 System.out.println("规则中存在错误，错误消息如下：");
                 KnowledgeBuilderErrors kbuidlerErrors = kbuilder.getErrors();
@@ -76,7 +103,7 @@ public class Test {
             map.put("b", "world");
             DataTest dataTest = new DataTest();
             dataTest.setList(list);
-//            dataTest.setMap(map);//map 5.3报错 java.util.HashMap cannot be cast to java.util.Collection
+            dataTest.setMap(map);//map 5.3报错 java.util.HashMap cannot be cast to java.util.Collection
             dataTest.setName("person");
             
             statefulKSession.insert(dataTest);//插入一个fact对象
@@ -115,6 +142,26 @@ public class Test {
         list.add(data3);
         final Map<String, Object> result = DroolsUtil.doDrools(
             "rules/test.drl", list, null);
+        final String processKey = (String) result.get("processKey");
+        System.out.println("------------:" + processKey);
+    }
+    
+    public static void callMapRules(){
+        List<Map<String, String>> list = new ArrayList<>();
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("name", "person");
+        map1.put("code", "a");
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("name", "person");
+        map2.put("code", "b");
+//        Map<String, String> map3 = new HashMap<>();
+//        map3.put("name", "world");
+//        map3.put("code", "c");
+        list.add(map1);
+        list.add(map2);
+//        list.add(map3);
+        final Map<String, Object> result = DroolsUtil.doDrools(
+            "rules/mapTest.drl", list, null);
         final String processKey = (String) result.get("processKey");
         System.out.println("------------:" + processKey);
     }

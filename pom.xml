@@ -2,27 +2,341 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.leeo</groupId>
-	<artifactId>ldap</artifactId>
+	<artifactId>test</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ldap Maven Webapp</name>
+	<name>test Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<ldap.version>2.0.3.RELEASE</ldap.version>
 		<junit.version>4.12</junit.version>
-		<spring.version>4.1.7.RELEASE</spring.version>
-		<slf4j.version>1.7.5</slf4j.version>
-		<logback.version>1.0.13</logback.version>
-		<quartz.version>2.2.1</quartz.version>
-		<drools.version>5.3.0.Final</drools.version>
+		<spring.version>4.1.9.RELEASE</spring.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<logback.version>1.1.3</logback.version>
+		<quartz.version>2.2.2</quartz.version>
+		<drools.version>5.6.0.Final</drools.version>
+
+		<druid.version>0.2.9</druid.version>
+		<hibernate.core.version>4.3.7.Final</hibernate.core.version>
+		<hibernate.ehcache.version>4.3.7.Final</hibernate.ehcache.version>
+		<hibernate.commons.annotaions.version>4.0.5.Final</hibernate.commons.annotaions.version>
+		<hibernate.validator.version>5.1.3.Final</hibernate.validator.version>
+		<javassist.version>3.18.2-GA</javassist.version>
+		<activiti.version>5.18.0</activiti.version><!-- 5.15.1 -->
+		<activemq.version>5.10.2</activemq.version>
+
+		<servlet.version>3.0.1</servlet.version>
+		<jsp.version>2.2</jsp.version>
+		<jstl.version>1.2</jstl.version>
+		<standard.version>1.1.2</standard.version>
+
+		<mysql.version>5.1.27</mysql.version>
+		<freemarker.version>2.3.21</freemarker.version>
+		<cxf.version>2.7.14</cxf.version>
+		
+		<hystrix.version>1.4.22</hystrix.version>  
+		<hystrix-metrics-event-stream.version>1.4.22</hystrix-metrics-event-stream.version>  
+		
+		<shiro.version>1.2.4</shiro.version>
+		<jcaptcha.version>1.0</jcaptcha.version>
 	</properties>
 	<dependencies>
-		<!-- spring begin -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
+		    <groupId>org.eclipse.persistence</groupId>
+		    <artifactId>org.eclipse.persistence.moxy</artifactId>
+		    <version>2.6.4</version>
 		</dependency>
+		<!-- kafka begin 
+		<dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.11</artifactId>
+            <version>0.10.0.1</version>
+        </dependency>-->
+        <dependency>
+		    <groupId>org.springframework.integration</groupId>
+		    <artifactId>spring-integration-kafka</artifactId>
+		    <version>2.0.1.RELEASE</version>
+		</dependency>
+		<dependency>
+	        <groupId>org.apache.kafka</groupId>
+	        <artifactId>kafka-clients</artifactId>
+	        <version>0.10.0.0</version>
+	    </dependency>
+		<!-- kafka end -->
+		<!-- otter begin -->
+		<dependency>
+		    <groupId>com.alibaba.otter</groupId>
+		    <artifactId>shared.etl</artifactId>
+		    <version>4.2.13-SNAPSHOT</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<artifactId>spring</artifactId>
+		    		<groupId>org.springframework</groupId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<dependency>
+	    <groupId>com.alibaba.otter</groupId>
+		    <artifactId>node.extend</artifactId>
+		    <version>4.2.13-SNAPSHOT</version>
+		</dependency>
+		<!-- otter end -->
+		<!-- canal -->
+		<dependency>
+		    <groupId>com.alibaba.otter</groupId>
+		    <artifactId>canal.client</artifactId>
+		    <version>1.0.21</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<artifactId>spring</artifactId>
+		    		<groupId>org.springframework</groupId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- xmemcached -->
+		<dependency>
+			<groupId>com.googlecode.xmemcached</groupId>
+			<artifactId>xmemcached</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<!-- jcaptcha begin 
+		<dependency>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha-api</artifactId>
+			<version>${jcaptcha.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha</artifactId>
+			<version>${jcaptcha.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha-integration-simple-servlet</artifactId>
+			<version>${jcaptcha.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>-->
+		<!-- jcaptcha end -->
+		<!-- shiro begin -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-beanutils</artifactId>
+					<groupId>commons-beanutils</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<!-- shiro end -->
+		<!-- guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+		<!-- spring-data-jpa begin -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.9.4.RELEASE</version>
+		</dependency>
+  		<!-- spring-data-jpa end -->
+		<!-- websocket begin -->
+		<dependency>  
+		   <groupId>org.springframework</groupId>  
+		   <artifactId>spring-websocket</artifactId>  
+		   <version>${spring.version}</version>  
+		</dependency>
+		<dependency>  
+		   <groupId>org.springframework</groupId>  
+		   <artifactId>spring-messaging</artifactId>  
+		   <version>${spring.version}</version>  
+		</dependency>
+		<dependency>  
+		    <groupId>com.fasterxml.jackson.core</groupId>  
+		    <artifactId>jackson-core</artifactId>  
+		    <version>2.3.0</version>  
+		</dependency>  
+		<dependency>  
+		    <groupId>com.fasterxml.jackson.core</groupId>  
+		    <artifactId>jackson-databind</artifactId>  
+		    <version>2.3.0</version>  
+		</dependency>
+		<!-- websocket end -->
+		<!-- POI begin -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.9</version>
+			<exclusions>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+		   <groupId>fr.opensagres.xdocreport</groupId>
+		   <artifactId>xdocreport</artifactId>
+		   <version>1.0.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>ooxml-schemas</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>  
+        	<groupId>fr.opensagres.xdocreport</groupId>  
+        	<artifactId>org.apache.poi.xwpf.converter.xhtml</artifactId>  
+        	<version>1.0.4</version>  
+      	</dependency> 
+		<!-- POI end -->
+		<!-- openoffice begin -->
+		<dependency>
+			<groupId>com.artofsolving</groupId>
+			<artifactId>jodconverter</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.artofsolving.jodconverter</groupId>
+			<artifactId>jodconverter-core</artifactId>
+			<version>3.0-beta-4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>unoil</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>ridl</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>juh</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		<!--  
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jodd</groupId>
+			<artifactId>jodd</artifactId>
+			<version>3.3.7</version>
+		</dependency>-->
+		<!-- openoffice end -->
+		<!-- spring session begin -->
+		<dependency>
+		    <groupId>org.springframework.session</groupId>
+		    <artifactId>spring-session</artifactId>
+		    <version>1.0.2.RELEASE</version>
+		</dependency>
+		<!-- spring session end -->
+		<!-- redis begin -->
+		<dependency>  
+		    <groupId>org.springframework.data</groupId>  
+		    <artifactId>spring-data-redis</artifactId>  
+		    <version>1.6.0.RELEASE</version>  
+		</dependency>  
+		<dependency>  
+		    <groupId>redis.clients</groupId>  
+		    <artifactId>jedis</artifactId>  
+		    <version>2.8.0</version>
+		</dependency> 
+		<!-- redis end -->
+   		<!-- hystrix begin -->
+		<dependency>  
+		     <groupId>com.netflix.hystrix</groupId>  
+		     <artifactId>hystrix-core</artifactId>  
+		     <version>${hystrix.version}</version>
+		     <!--  
+		     <exclusions>
+		     	<exclusion>
+		     		<artifactId>commons-lang</artifactId>
+		     		<groupId>commons-lang</groupId>
+		     	</exclusion>
+		     </exclusions>
+		     -->
+		</dependency>  
+		     <dependency>
+		     <groupId>com.netflix.hystrix</groupId>  
+		     <artifactId>hystrix-metrics-event-stream</artifactId>  
+		     <version>${hystrix-metrics-event-stream.version}</version>  
+		 </dependency>
+		<!-- hystrix end -->
+		<!-- dubbo -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- zookeeper -->
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- zkclient -->
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.1</version>
+		</dependency>
+		<!-- mysql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		<!-- spring begin -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
@@ -45,6 +359,21 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
@@ -63,9 +392,20 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- spring webmvc相关jar包 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 		<!-- spring end -->
 
-		<!-- ldap -->
+		<!-- ldap begin -->
 		<dependency>
 			<groupId>org.springframework.ldap</groupId>
 			<artifactId>spring-ldap-core</artifactId>
@@ -89,6 +429,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- ldap end -->
 
 		<!-- junit -->
 		<dependency>
@@ -98,7 +439,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- 日志相关jar包 -->
+		<!-- logback begin -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -114,46 +455,254 @@
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
+		<!-- logback end -->
 
 		<!-- quartz -->
 		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>${quartz.version}</version>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		    <version>${quartz.version}</version>
 		</dependency>
-
-		<!-- drools begin -->
 		<!--  
 		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
-			<version>6.3.0.Final</version>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz-jobs</artifactId>
+		    <version>${quartz.version}</version>
 		</dependency>
 		-->
+
+		<!-- drools begin -->
 		<dependency>
 			<groupId>org.drools</groupId>
 			<artifactId>drools-compiler</artifactId>
 			<version>${drools.version}</version>
 		</dependency>
-		<!--  
+		<!-- 用于支持JDK1.8 -->
 		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-decisiontables</artifactId>
-			<version>${drools.version}</version>
+			<groupId>org.eclipse.jdt.core.compiler</groupId>
+			<artifactId>ecj</artifactId>
+			<version>4.3.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-templates</artifactId>
-			<version>${drools.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-internal</artifactId>
-			<version>${drools.version}</version>
-		</dependency>
-		-->
 		<!-- drools end -->
-		
+
+		<!-- druid begin dataSource 相关jar包 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid.version}</version>
+		</dependency>
+		<!-- druid end -->
+
+		<!-- hibernate begin -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.core.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javassist.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.ehcache.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>ehcache-core</artifactId>
+					<groupId>net.sf.ehcache</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>${hibernate.commons.annotaions.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- hibernate validator 相关jar包 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.validator.version}</version>
+		</dependency>
+		<!-- hibernate end -->
+
+		<!-- activiti begin -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-json-converter</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-common-rest</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-bpmn-layout</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-simple-workflow</artifactId>
+			<version>${activiti.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-rest</artifactId>
+			<version>${activiti.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.annotation</groupId>
+					<artifactId>jsr250-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- activiti end -->
+
+		<!-- activeMQ begin -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-client</artifactId>
+			<version>${activemq.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-spring</artifactId>
+			<version>${activemq.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jms_1.1_spec</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>xbean-spring</artifactId>
+			<version>3.16</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>2.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-lang</artifactId>
+					<groupId>commons-lang</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-lang</artifactId>
+					<groupId>commons-lang</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- activeMQ end -->
+
+		<!-- web相关jar包 begin -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>${jsp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>${standard.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>${jstl.version}</version>
+		</dependency>
+		<!-- web相关jar包 end -->
+
+		<!-- CXF begin -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<!-- CXF end -->
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.1.37</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -164,8 +713,126 @@
 			<artifactId>commons-collections</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>fluent-hc</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 	</dependencies>
 	<build>
-		<finalName>ldap</finalName>
+		<finalName>test</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<compilerArguments>
+						<verbose />
+						<bootclasspath>${env.JAVA_HOME}\jre\lib\rt.jar;${env.JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<!-- 打包之前过滤掉不想要被打进 .war包的jar,注意：这个地方，本来路径应该是 WEB-INF/lib/anaalyzer-2.0.4.jar,但是经过多次试验,不能这样，至于咋回事儿，搞不清楚。。经多方查证均无结果 
+						暂且这样吧，虽然显得很丑陋，但是总能解决问题吧 -->
+					<warSourceExcludes>*/lib/analyzer-2.0.4.jar</warSourceExcludes>
+					<webResources>
+						<resource>
+							<!-- 元配置文件的目录，相对于pom.xml文件的路径 -->
+							<directory>src/main/webapp/WEB-INF</directory>
+							<!-- 是否过滤文件，也就是是否启动auto-config的功能 -->
+							<filtering>true</filtering>
+							<!-- 目标路径 -->
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>development</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<db.name>base-demo</db.name>
+				<connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
+				<connection.url>
+                    <![CDATA[jdbc:mysql://localhost:3306/${db.name}?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]>
+				</connection.url>
+				<connection.username>root</connection.username>
+				<connection.password>123456</connection.password>
+				<jpa.showSql>true</jpa.showSql>
+				<jpa.generateDdl>false</jpa.generateDdl>
+				<jpa.database>MYSQL</jpa.database>
+				<jpa.databasePlatform>org.hibernate.dialect.MySQL5InnoDBDialect</jpa.databasePlatform>
+				<log.dir>D:/Backup/es</log.dir>
+
+				<shiro.uid.cookie.domain></shiro.uid.cookie.domain>
+				<shiro.uid.cookie.path>/</shiro.uid.cookie.path>
+
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<db.name>base-demo</db.name>
+				<connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
+				<connection.admin.url>
+                    <![CDATA[jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]>
+				</connection.admin.url>
+				<connection.url>
+                    <![CDATA[jdbc:mysql://localhost:3306/${db.name}?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8]]>
+				</connection.url>
+				<connection.username>root</connection.username>
+				<connection.password />
+				<jpa.showSql>false</jpa.showSql>
+				<jpa.generateDdl>false</jpa.generateDdl>
+				<jpa.database>MYSQL</jpa.database>
+				<jpa.databasePlatform>org.hibernate.dialect.MySQL5InnoDBDialect</jpa.databasePlatform>
+				<log.dir>/data/backup/es</log.dir>
+
+				<shiro.uid.cookie.domain>leeo.com</shiro.uid.cookie.domain>
+				<shiro.uid.cookie.path>/</shiro.uid.cookie.path>
+
+			</properties>
+		</profile>
+
+	</profiles>
+	
 </project>

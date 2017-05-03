@@ -10,7 +10,7 @@ import com.leeo.threadPool.PrintTask;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({
-"classpath:spring-thread.xml" })
+"classpath:spring-task.xml" })
 //"classpath:spring-context.xml",
 public class PrintTest{
 

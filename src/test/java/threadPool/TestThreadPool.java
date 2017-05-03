@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.leeo.threadPool.StartTaskThread;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:spring-thread.xml" })
+@ContextConfiguration({ "classpath:spring-task.xml" })
 public class TestThreadPool{
 
     private static int produceTaskSleepTime = 10;

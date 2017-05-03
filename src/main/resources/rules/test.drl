@@ -46,6 +46,15 @@ rule "listTest5 not memberOf"
         //System.out.println("---listTest5 not memberOf:"+ $m.getName() );
 end
 
+// 遍历list
+rule "listTest6 from"
+    when
+    	$data : DataTest();  
+        $str : String() from $data.list;
+    then
+        System.out.println("---listTest6 from:"+ $str );
+end
+
 rule "mapTest1 contains"
     when
         m : DataTest( map contains "a" )
@@ -58,6 +67,20 @@ rule "mapTest2 not contains"
         m : DataTest( map not contains "b" )
     then
         System.out.println("---map2 not contains:"+ m );
+end
+
+rule "mapTest3 get"
+    when
+        $data : DataTest()
+    then
+        System.out.println("---mapTest3 from:"+ $data.getMap().get("a") );
+end
+
+rule "mapTest4 get"
+    when
+        $map : DataTest(map.get("a")=="hello")
+    then
+        System.out.println("---mapTest4 from:"+ $map);
 end
 
 rule "stringTest"

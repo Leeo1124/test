@@ -46,7 +46,7 @@ public class DroolsUtil {
 	}
 	
 	/**
-	 * 执行规则方法
+	 * 执行规则方法(synchronized 需同步，否则多线程调用编译规则文件时会报错.)
 	 * @param drlPath drl 文件位置  , 如：com/drools/rules/Sample.drl
 	 * @param insertObjects 传入的对象
 	 * @param globasServices 传入的service,以key value的方式与drl文件中对应

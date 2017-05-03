@@ -10,37 +10,17 @@
          http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd ">
 
-	<!------------ 配置调度程序quartz ，其中配置JobDetail有两种方式------------ -->
-	<!--方式一：使用JobDetailBean，任务类必须实现Job接口 
-	<bean id="myjob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="name" value="exampleJob"></property>
-		<property name="jobClass" value="com.ncs.hj.SpringQtz"></property>
-		<property name="jobDataAsMap">
-			<map>
-				<entry key="service">
-					<value>simple is the beat</value>
-				</entry>
-			</map>
-		</property>
-	</bean>
-	-->
-	
-	<!-- 方式二：使用MethodInvokingJobDetailFactoryBean，任务类可以不实现Job接口，通过targetMethod指定调用方法 -->
 	<!-- 定义目标bean和bean中的方法 -->
-	<bean id="SpringQtzJobMethod"
+	<bean id="sendTaskJob"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject">
-			<ref bean="sendTask" />
-		</property>
-		<property name="targetMethod">  <!-- 要执行的方法名称 -->
-			<value>execute</value>
-		</property>
+		<property name="targetObject" ref="sendTask" />
+		<property name="targetMethod" value="execute" />
 	</bean>
 
 	<!-- ======================== 调度触发器 ======================== -->
-	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="SpringQtzJobMethod"></property>
-		<property name="cronExpression" value="0/5 * * * * ?"></property>
+	<bean id="sendTaskCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="sendTaskJob" />
+		<property name="cronExpression" value="0 0 21 * * ?" /><!-- 0/5 * * * * ? -->
 	</bean>
 
 	<!-- ======================== 调度工厂 ======================== -->
@@ -48,7 +28,7 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="CronTriggerBean" />
+				<ref bean="sendTaskCronTrigger" />
 			</list>
 		</property>
 	</bean>

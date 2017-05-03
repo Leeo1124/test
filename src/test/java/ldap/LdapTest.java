@@ -9,17 +9,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.leeo.ldap.Group;
-import com.leeo.ldap.LdapSerivceImpl;
+import com.leeo.ldap.LdapSerivce;
 import com.leeo.ldap.Person;
 import com.leeo.ldap.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring-context.xml",
-"classpath:spring-ldap.xml" })
+    "classpath:spring-ldap.xml",
+    "classpath:spring-task.xml",
+    "classpath:spring-hibernate.xml",
+    "classpath:spring-quartz.xml" })
 public class LdapTest {
 
     @Autowired
-    LdapSerivceImpl ldapSerivce;
+    LdapSerivce ldapSerivce;
 
     @Test
     public void getAllNames() {
