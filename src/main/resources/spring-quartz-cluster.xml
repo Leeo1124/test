@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"
+	default-lazy-init="true">
+
+	<description>Quartz的定时集群任务配置</description>
+	
+	<!-- Quartz集群Schduler -->
+	<bean id="clusterQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- Triggers集成 -->
+		<property name="triggers">
+			<list>
+				<!--  
+				<ref bean="timerTrigger" />
+				<ref bean="sendEmailCronTrigger" />
+				-->
+				<ref bean="sendEmailCronTrigger2" />
+			</list>
+		</property>
+		<property name="schedulerContextAsMap">      
+            <map>      
+                <!-- spring 管理的service需要放到这里，才能够注入成功 -->      
+                <entry key="userService" value-ref="userService"/>
+            </map>
+        </property> 
+		<!--  quartz配置文件路径, 指向cluster配置 -->
+		<property name="configLocation" value="classpath:quartz-cluster.properties" />
+		<!-- 启动时延期2秒开始任务 -->
+		<property name="startupDelay" value="2" />
+		<!-- 保存Job数据到数据库所需的数据源 （会替换quartz-cluster.properties配置文件中的数据源）-->
+		<property name="dataSource" ref="dataSource" />
+		<!-- Job接受applicationContext的成员变量名 -->
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		<!-- QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了 -->
+		<property name="overwriteExistingJobs" value="true" />
+		
+		<!-- 设置自动启动 
+    	<property name="autoStartup" value="true" />
+    	-->
+		<!--  
+		<property name="schedulerListeners">
+	        <list>
+	            <ref bean="quartzExceptionSchedulerListener" />
+	        </list>
+	    </property>
+	    -->
+	</bean>
+	
+	<!-- Timer式 Trigger定义-->
+	<bean id="timerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="timerJobDetail" />
+		<!-- 每次执行间隔5分钟 -->
+		<property name="repeatInterval" value="60000" />
+	</bean>
+
+	<!-- JobDetail, 基于JobDetailBean实例化Job Class,可持久化到数据库实现集群 -->
+	<bean id="timerJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="durability" value="true"/>
+		<property name="jobClass" value="com.leeo.quartz.QuartzClusterableJob" />
+	</bean>
+	
+    <bean id="sendEmailTask" class="com.leeo.quartz.SendEmailTask" />
+    
+    <bean name="sendEmailJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="com.leeo.quartz.ScheduledJob" />
+        <property name="jobDataMap">
+            <map>
+            	<!-- 非spring管理的service放到这里，就可以注入进去 -->
+                <entry key="sendEmailTask" value-ref="sendEmailTask" />
+            </map>
+        </property>
+        <property name="durability" value="true" />
+    </bean>
+    
+    <bean id="sendEmailCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    	<property name="jobDetail" ref="sendEmailJob"/>
+        <property name="cronExpression" value ="0 0/1 * * * ?"/>
+    </bean>
+    
+    <bean id="sendEmailJob2" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass" value="com.leeo.quartz.MyDetailQuartzStatefulJobBean" />
+		<property name="jobDataMap">
+			<map>
+				<entry key="targetObject" value="sendTask" />
+				<entry key="targetMethod" value="execute" />
+			</map>
+		</property>
+		<property name="durability" value="true" />
+	</bean>
+    <bean id="sendEmailCronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+    	<property name="jobDetail" ref="sendEmailJob2"/>
+        <property name="cronExpression" value ="0 0/30 * * * ?"/>
+    </bean>
+    
+	<!-- Job的可配置属性,在job中通过applicationContext动态获取 -->
+	<util:map id="timerJobConfig">
+		<entry key="nodeName" value="${server.node_name}" />
+	</util:map>
+    
+</beans>

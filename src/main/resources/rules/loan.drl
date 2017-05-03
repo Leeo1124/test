@@ -1,0 +1,191 @@
+package com.ucredit.contract.drools.loan;
+import com.leeo.drools.RuleVariable;
+
+rule "rule22"
+	salience 16
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && lendChannel=="1" && lendType=="5" && productType=="0" && fundSource=="1")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(21);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule34"
+	salience 15
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && isCA=="1" && lendType=="5" && fundSource=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule45"
+	salience 14
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="0" && isCA=="1" && lendType=="0" && fundSource=="1")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(21);
+					ruleVariable.getTemplateList().add(30);
+			end
+rule "rule13"
+	salience 13
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && lendChannel=="0" && isCA=="1" && lendType=="0" && productType=="0" && fundSource=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule36"
+	salience 12
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && isCA=="1" && lendType=="5" && fundSource=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(30);
+			end
+rule "rule16"
+	salience 11
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && lendChannel=="0" && isCA=="1" && lendType=="5" && productType=="0" && fundSource=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule38"
+	salience 10
+	no-loop true
+	when
+		ruleVariable:RuleVariable(fundSource=="7")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(20);
+					ruleVariable.getTemplateList().add(27);
+			end
+rule "rule49"
+	salience 9
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && isCA=="1" && lendType=="5" && fundSource=="1")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(21);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule28"
+	salience 8
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && isCA=="1" && lendType=="0" && fundSource=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule5"
+	salience 7
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="0" && productType=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule7"
+	salience 6
+	no-loop true
+	when
+		ruleVariable:RuleVariable(productType=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule51"
+	salience 5
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="0" && isCA=="1" && lendType=="5" && fundSource=="1")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(31);
+					ruleVariable.getTemplateList().add(21);
+					ruleVariable.getTemplateList().add(30);
+			end
+rule "rule30"
+	salience 4
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="0" && isCA=="1" && lendType=="0" && fundSource=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(32);
+					ruleVariable.getTemplateList().add(24);
+					ruleVariable.getTemplateList().add(30);
+			end
+rule "rule53"
+	salience 3
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="0" && productType=="0")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(18);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(21);
+			end
+rule "rule21"
+	salience 2
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && lendChannel=="1" && lendType=="0" && productType=="0" && fundSource=="1")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(21);
+					ruleVariable.getTemplateList().add(33);
+			end
+rule "rule43"
+	salience 1
+	no-loop true
+	when
+		ruleVariable:RuleVariable(wholeSale=="1" && isCA=="1" && lendType=="0" && fundSource=="1")
+	then
+		ruleVariable.getTemplateList().clear();
+					ruleVariable.getTemplateList().add(17);
+					ruleVariable.getTemplateList().add(23);
+					ruleVariable.getTemplateList().add(21);
+					ruleVariable.getTemplateList().add(33);
+			end

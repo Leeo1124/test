@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:amq="http://activemq.apache.org/schema/core" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+          http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+	<context:component-scan base-package="com.leeo.amq" />
+	
+	<!-- 211.155.80.39   10.255.33.7  10.255.6.98  -->
+  	<amq:connectionFactory id="connectionFactory" brokerURL="tcp://10.255.33.15:61616" userName="oasis" password="oasis">
+        <amq:redeliveryPolicyMap>
+            <amq:redeliveryPolicyMap>
+                <amq:defaultEntry>
+                     <!-- 5次，每次30秒 -->
+                    <amq:redeliveryPolicy maximumRedeliveries="5" initialRedeliveryDelay="30000" />
+                </amq:defaultEntry>
+                <amq:redeliveryPolicyEntries>
+                    <!-- 5次，30秒，60秒，120秒，240秒，480??-->
+                    <!-- 
+                    <amq:redeliveryPolicy queue="queue.thread.autopay" maximumRedeliveries="5"
+                        initialRedeliveryDelay="30000" backOffMultiplier="2" useExponentialBackOff="true" />
+                     -->
+                </amq:redeliveryPolicyEntries>
+            </amq:redeliveryPolicyMap>
+        </amq:redeliveryPolicyMap>
+    </amq:connectionFactory>
+	
+	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="timeToLive" value="86400000"/>
+    </bean>
+    
+    <!-- 消息监听适配器对应的监听容器 --> 
+	<bean id="topicListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<!-- 目的地 -->
+		<property name="destination" ref="topicRequest" />
+		<!-- 消息监听器 -->
+		<property name="messageListener" ref="topicListenerAdapter" />
+		<property name="concurrentConsumers" value="10" />
+		<property name="sessionTransacted" value="true" />
+	</bean>
+	<bean id="queueListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="queueRequest" />
+		<property name="messageListener" ref="queueListenerAdapter" />
+		<!--  
+		<property name="messageSelector" value="SourceSystemID='oasis'" />
+		-->
+		<property name="concurrentConsumers" value="10" />
+		<property name="sessionTransacted" value="true" />
+	</bean>
+	
+	<!-- 消息监听适配器(将接收到的消息进行类型转换) -->
+    <bean id="topicListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="topicConsumer" />
+		<!-- 监听方法 -->
+		<property name="defaultListenerMethod" value="receive" />
+		<!-- 消息转换器 -->
+		<property name="messageConverter" ref="defaultMessageConverter" />
+	</bean>
+    <bean id="queueListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="queueConsumer" />
+		<property name="defaultListenerMethod" value="receive" />
+		<property name="messageConverter" ref="simpleMessageConverter" />
+	</bean>
+	
+	<!-- 消息转换器（采用注解方式） 
+    <bean id="defaultMessageConverter" class="com.leeo.amq.DefaultMessageConverter" />
+    -->
+    
+    <!-- 消息生产者 （采用注解方式） 
+    <bean id="topicMessageProducer" class="com.leeo.amq.producer.TopicMessageProducer">  
+        <property name="template" ref="jmsTemplate" />  
+        <property name="destination" ref="topicRequest" />  
+    </bean>  
+    <bean id="queueMessageProducer" class="com.leeo.amq.producer.QueueMessageProducer">  
+        <property name="template" ref="jmsTemplate" />  
+        <property name="destination" ref="queueRequest" />  
+    </bean>
+    -->
+    
+    <!-- 消息消费者（采用注解方式）
+    <bean id="requestTopicConsumer" class="com.leeo.amq.consumer.RequestTopicConsumer" />    
+    <bean id="requestQueueConsumer" class="com.leeo.amq.consumer.RequestQueueConsumer" /> 
+    --> 
+
+    <!-- 这个是队列目的地，点对点的 --> 
+    <amq:queue id="queueRequest" physicalName="queue.test.request.credit" />
+    <!-- 这个是主题目的地，一对多的 -->
+    <amq:topic id="topicRequest" physicalName="topic.test.request.credit" />
+</beans>

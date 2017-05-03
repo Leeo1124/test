@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/websocket
+        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+	<!--websocket配置 -->
+	<bean id="telWebSocketHandler" class="com.leeo.websocket.TelWebSocketHandler" />
+
+	<websocket:handlers>
+		<websocket:mapping path="/websocket" handler="telWebSocketHandler" />
+		<websocket:handshake-interceptors>
+			<bean class="com.leeo.websocket.TelWebSocketHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+
+	<bean
+		class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+		<property name="maxTextMessageBufferSize" value="8192" />
+		<property name="maxBinaryMessageBufferSize" value="8192" />
+		<property name="maxSessionIdleTimeout" value="900000" />
+		<property name="asyncSendTimeout" value="5000" />
+	</bean>
+	
+</beans>

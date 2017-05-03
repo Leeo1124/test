@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+	<description>导入项目中的applicationContext文件列表</description>
+
+	<import resource="spring-context.xml" />
+	<import resource="spring-activiti.xml" />
+	<import resource="spring-amq.xml" />
+	<import resource="spring-data-jpa.xml" />
+	<import resource="spring-quartz-cluster.xml" />
+	<import resource="spring-ldap.xml" />
+	<import resource="spring-task.xml" />
+	<import resource="spring-cxf.xml" />
+	<import resource="spring-session.xml" />
+	<import resource="spring-shiro.xml" />
+	<import resource="spring-websocket.xml" />
+	<!--
+	<import resource="spring-hibernate.xml" />
+	<import resource="spring-dubbo-provider.xml" />
+	<import resource="spring-dubbo-consumer.xml" />
+	 -->
+	 
+	<import resource="spring-kafka-producer.xml" />
+	<import resource="spring-kafka-consumer.xml" />
+</beans>

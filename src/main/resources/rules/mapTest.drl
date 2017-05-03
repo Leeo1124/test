@@ -1,0 +1,26 @@
+package com.sample
+ 
+import java.util.Map; 
+
+global java.util.HashMap  results
+
+rule "rule1"
+	salience 2
+	dialect "mvel"
+    when
+        $m : Map( get("name") == "person" && get("code") == "a")
+    then
+        System.out.println("---rule1:"+ $m.size() );
+        results.put("processKey", $m.get("name"));
+end
+
+rule "rule2"
+	salience 1
+	dialect "mvel" 
+    when
+        $m : Map( get("name") == "person" && get("code") != "a")
+    then
+        System.out.println("---rule1:"+ $m.size() );
+        results.put("processKey", "default");
+end
+
